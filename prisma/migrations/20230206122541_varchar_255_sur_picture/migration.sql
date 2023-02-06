@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Jeux` MODIFY `Picture` VARCHAR(255) NOT NULL;
