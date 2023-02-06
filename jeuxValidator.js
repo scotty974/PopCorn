@@ -4,7 +4,8 @@ const jeuxValidation = z.object({
   Title : z.string(),
   Description : z.string(),
   Picture: z.string(),
-  Worker : z.string()
+  lien : z.string(),
+  groupe_id : z.number()
 
 });
 

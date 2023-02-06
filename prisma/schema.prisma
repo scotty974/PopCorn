@@ -10,10 +10,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Groupe{
+  id Int @id @default(autoincrement())
+  name String
+  logo String @db.VarChar(255)
+  jeux Jeux []
+}
 model Jeux{
   id Int @id @default(autoincrement())
   Title String
   Description String 
   Picture String @db.VarChar(255)
-  Workers String
+  lien String
+  groupe_id Int
+  groupe Groupe @relation(fields: [groupe_id], references: [id])
+
 }

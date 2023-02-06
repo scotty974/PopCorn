@@ -11,15 +11,24 @@ const prisma = new PrismaClient();
 router.post('/jeux',async (req,res,next)=>{
    let jeuxData;
    jeuxData =  jeuxValidation.parse(req.body)
-   const jeux = await prisma.jeux.create({
+  let jeux =  await prisma.jeux.create({
         data:{
             Title : jeuxData.Title,
             Description : jeuxData.Description,
             Picture : jeuxData.Picture,
-            Workers : jeuxData.Worker 
+            lien : jeuxData.lien,
+            groupe:{
+                connect:{
+                    id : jeuxData.groupe_id
+                    
+                }
+            }
         }
+        
    })
    res.json(jeux)
+   console.log(jeux)
+   
 })
 
 
