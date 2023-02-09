@@ -1,0 +1,36 @@
+services:
+  db:
+    image: mysql:oracle
+    env_file:
+      - .env
+    networks:
+      - back-net
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_DATABASE=popcorn"
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3306"]
+      interval: 3s
+      timeout: 30s
+      retries: 10
+    ports:
+      - "3306:3306"
+  backend:
+    depends_on:
+      db:
+        condition: service_healthy
+    build: .
+    image: popcorn-backend
+    env_file:
+      - .env
+    environment:
+      - "DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@db:3306/popcorn"
+    networks:
+      - back-net
+    ports:
+      - "${API_PORT}:${API_PORT}"
+
+networks:
+  back-net:
