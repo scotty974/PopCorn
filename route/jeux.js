@@ -2,9 +2,10 @@ import express from "express";
 import { PrismaClient } from "@prisma/client";
 import createError from "http-errors"
 import jeuxValidation from "../jeuxValidator.js";
- 
+
 const router = express.Router()
 const prisma = new PrismaClient();
+
 
 
 
@@ -31,6 +32,14 @@ router.post('/jeux',async (req,res,next)=>{
    
 })
 
+router.get('/jeux', async(req,res)=>{
+   let jeux =  await prisma.jeux.findMany({
+        include:{
+            groupe:true
+        }
+    })
+    res.json(jeux)
+})
 
 
 
