@@ -21,6 +21,7 @@ services:
       db:
         condition: service_healthy
     build: .
+    restart : always
     image: popcorn-backend
     env_file:
       - .env
